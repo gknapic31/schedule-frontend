@@ -7,14 +7,14 @@
             <div class="form-group">
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-envelope ti-email"></i></span>
-                <input type="text" class="form-control" placeholder="Your email address">
+                <input type="text" class="form-control" v-model="email" placeholder="Your email address">
               </div>
             </div>
             <hr class="hr-xs">
             <div class="form-group">
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-lock ti-unlock"></i></span>
-                <input type="password" class="form-control" placeholder="Choose a password">
+                <input type="password" class="form-control" v-model="password" placeholder="Choose a password">
               </div>
             </div>
             <button class="btn btn-primary btn-block" type="submit">Log in</button>
@@ -166,3 +166,18 @@ html, body {
 }
 
 </style>
+
+
+<script>
+
+export default {
+    data(){
+        return{
+          email:'',
+          password:''
+        }
+    }
+   
+
+};
+</script>
