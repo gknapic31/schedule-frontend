@@ -3,11 +3,10 @@
       <main>
         <div class="login-block">
           <h1>Create your account</h1>
-          <form action="#">
             <div class="form-group">
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-user ti-user"></i></span>
-                <input type="text" class="form-control" v-model="companyName" placeholder="Your company name">
+                <input type="text" class="form-control" v-model="companyname" placeholder="Your company name">
               </div>
             </div>
             <hr class="hr-xs">
@@ -24,9 +23,7 @@
                 <input type="password" class="form-control" v-model="password" placeholder="Choose a password">
               </div>
             </div>
-            <button class="btn btn-primary btn-block" type="submit">Log in</button>
-
-          </form>
+            <button class="btn btn-primary btn-block" type="submit"  @click="register()">Register</button>
         </div>
         <div class="login-links">
           <p class="text-center">Already have an account? <a class="txt-brand" href="Login">Log in</a></p>
@@ -35,6 +32,36 @@
     </div>
   </template>
   
+
+
+  <script>
+  import { Auth } from "@/services";
+export default {
+  name: 'LoginComp',
+  data() {
+    return {
+      email: '',
+      password: '',
+      companyname: '',
+    };
+  },
+  methods: {
+    async register() {
+      try {
+
+        
+        let success = await Auth.registeruser(this.email, this.password, this.companyname);
+
+        if (success) {
+          this.$router.replace({ path: "/login" }).then(() => location.reload());
+        }
+      } catch (e) {
+        console.log(e);
+
+      }
+    }
+  },
+};</script>
 
 <style scoped lang="scss">
 html, body {
@@ -173,18 +200,3 @@ html, body {
 }
 
 </style>
-
-<script>
-
-export default {
-    data(){
-        return{
-          companyName:null,
-          email:'',
-          password:''
-        }
-    }
-   
-
-};
-</script>

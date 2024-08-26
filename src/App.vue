@@ -17,11 +17,17 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarToggler">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-          <li class="nav-item">
+          <li class="nav-item" v-if="!authdata.authenticated">
             <router-link to="/login" class="nav-link">LOG IN</router-link> 
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="!authdata.authenticated">
             <router-link to="/signup" class="nav-link">SIGN UP</router-link> 
+          </li>
+          <li class="nav-item" style="color:white" v-if="authdata.authenticated">
+            <p class="nav-link" style="color:white"> Copmany:  {{ companyname }}</p> 
+          </li>
+          <li class="nav-item" v-if="authdata.authenticated">
+            <p @click="logout()" class="nav-link">Logout</p> 
           </li>
         </ul>
       </div>
@@ -30,7 +36,35 @@
   </div>
 </template>
 
+<script>
+import { Auth } from "@/services"
 
+export default {
+  data(){
+    return{
+      authdata:Auth.state,
+      companyname:''
+    }
+  },
+  methods:{
+    logout(){
+      Auth.logout();
+      this.$router.push({path: "/"}).then(() => location.reload())
+    },
+    getusr() {
+      try{
+      let user = Auth.getUser();
+     this.companyname = user.companyname
+      }catch(e){
+        console.log(e)
+      }
+    }
+  },
+  created(){
+      this.getusr();
+  }
+}
+</script>
 
 <style lang="scss">
 #app {

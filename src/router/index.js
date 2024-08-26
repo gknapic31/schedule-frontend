@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
+import { Auth } from "@/services";
 
 const routes = [
   {
@@ -32,6 +33,20 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, from, next)=>{
+  const publicPages=["/", "/login", "/signup"];
+  const loginPage= !publicPages.includes(to.path); 
+  const  user = Auth.getUser();
+  if(loginPage && !user){
+     next('/login');
+     return
+
+  }
+
+
+  next();
 })
 
 export default router

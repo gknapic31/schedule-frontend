@@ -3,7 +3,6 @@
       <main>
         <div class="login-block">
           <h1>Log in into your account</h1>
-          <form action="#">
             <div class="form-group">
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-envelope ti-email"></i></span>
@@ -17,9 +16,7 @@
                 <input type="password" class="form-control" v-model="password" placeholder="Choose a password">
               </div>
             </div>
-            <button class="btn btn-primary btn-block" type="submit">Log in</button>
-
-          </form>
+            <button class="btn btn-primary btn-block" @click="login()">Log in</button>
         </div>
         <div class="login-links">
           <p class="text-center">Already have an account? <a class="txt-brand" href="SignUp">Sign up</a></p>
@@ -28,6 +25,40 @@
     </div>
   </template>
   
+
+<script>
+
+import { Auth } from "@/services";
+
+export default {
+  name: 'LoginComp',
+  data() {
+    return {
+      email: '',
+      password: '',
+    };
+  },
+  methods: {
+    async login() {
+      try {
+
+        
+        let success = await Auth.login(this.email, this.password);
+
+        if (success) {
+          this.$router.replace({ path: "/form" }).then(() => location.reload());
+        }
+      } catch (e) {
+        console.log(e);
+
+      }
+    },
+
+  },
+};
+</script>
+
+
 
 <style scoped lang="scss">
 html, body {
@@ -168,16 +199,4 @@ html, body {
 </style>
 
 
-<script>
 
-export default {
-    data(){
-        return{
-          email:'',
-          password:''
-        }
-    }
-   
-
-};
-</script>
