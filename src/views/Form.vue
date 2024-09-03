@@ -126,7 +126,7 @@ export default {
           employees: employees
         };
 
-        let response = await axios.post('http://localhost:3000/schedule', postData);
+        let response = await axios.post('https://schedule-backend-vfnk.onrender.com/schedule', postData);
         this.schedule = response.data;
       } catch (e) {
         console.log(e);
