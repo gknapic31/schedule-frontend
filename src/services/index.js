@@ -4,7 +4,7 @@ import $router from '@/router'
 
 let a = JSON.parse(localStorage.getItem("user"))
 let Service = axios.create({
-    baseURL: `https://schedule-backend-vfnk.onrender.com`,
+    baseURL: `https://schedule-backend-vfnk.onrender.com/`,
 });
 
 
@@ -25,20 +25,21 @@ Service.interceptors.request.use((request) => {
 // })
 
 let Auth ={
-    async login(username, password) {
-        let response = await Service.post("/authuser", {
-          username: username,
-          password: password,
+  async login (email,password){
+      console.log(email,password)
+      let reponse = await  axios.post(`https://schedule-backend-vfnk.onrender.com/authuser`,{
+            email: email,
+            password:password,
         });
-        let user = response.data;
-    
-        localStorage.setItem("user", JSON.stringify(user));
-    
-        return true;
-      },
+
+        let user = reponse.data
+        console.log(JSON.stringify(user.email))
+        localStorage.setItem('user', JSON.stringify(user));
+        return true
+    },
     async registeruser (email,password, companyname){
         console.log(email,password)
-        let reponse = await  axios.post(`http://localhost:3000/createuser`,{
+        let reponse = await  axios.post(`https://schedule-backend-vfnk.onrender.com/createuser`,{
               email: email,
               password:password,
               companyname: companyname
